@@ -1040,9 +1040,19 @@
     const finishedBox = document.getElementById('finishedBox');
     const accuracyValue = document.getElementById('accuracyValue');
 
-    // Shuffle Questions
+    // Shuffle Questions (soal DAN posisi pilihan jawabannya diacak, bukan cuma urutan soal)
     function shuffleDeck() {
-      shuffledQuestions = [...QUESTION_BANK].sort(() => Math.random() - 0.5);
+      shuffledQuestions = QUESTION_BANK
+        .map(q => {
+          const correctText = q.choices[q.correct];
+          const shuffledChoices = [...q.choices].sort(() => Math.random() - 0.5);
+          return {
+            ...q,
+            choices: shuffledChoices,
+            correct: shuffledChoices.indexOf(correctText)
+          };
+        })
+        .sort(() => Math.random() - 0.5);
       roundResults = new Array(shuffledQuestions.length).fill(null);
       correctCount = 0;
       wrongCount = 0;
