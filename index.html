@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talking Stick: Sejarah VOC & Perang Jenar</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================
+       DESIGN SYSTEM - KLASIK EDITORIAL NUSANTARA
+       ========================================== */
+    :root {
+      --bg-parchment: #F6F1EB;
+      --bg-card: #FFFFFF;
+      --bg-dark-accent: #1C1917;
+      
+      --ink-primary: #12100E;
+      --ink-secondary: #3D3835;
+      
+      --maroon-deep: #701A1E;
+      --maroon-hover: #561216;
+      --maroon-light: #F8EBEB;
+      
+      --gold-accent: #9A7B38;
+      --gold-border: #CBB279;
+      --gold-light: #FDF9EE;
+
+      --focus-good: #3E5C3A;
+      --focus-good-bg: #EAF0E6;
+      --focus-mid: #8A6A1F;
+      --focus-mid-bg: #F6EFD9;
+      --focus-low: #701A1E;
+      --focus-low-bg: #F8EBEB;
+
+      --border-ink: #12100E;
+      --shadow-solid: 6px 6px 0px #12100E;
+      --shadow-solid-sm: 3px 3px 0px #12100E;
+      --shadow-solid-lg: 10px 10px 0px #12100E;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-parchment);
+      color: var(--ink-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(154, 123, 56, 0.05) 0%, transparent 60%),
+        radial-gradient(circle at 85% 85%, rgba(112, 26, 30, 0.04) 0%, transparent 60%);
+    }
+
+    /* BORDER FRAME PROYEKTOR KLASIK */
+    .screen-frame {
+      min-height: 100vh;
+      padding: 24px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 6px solid var(--border-ink);
+      outline: 2px solid var(--gold-border);
+      outline-offset: -12px;
+      position: relative;
+    }
+
+    /* HEADER */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 3px solid var(--border-ink);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .emblem-badge {
+      width: 48px;
+      height: 48px;
+      background-color: var(--maroon-deep);
+      color: #FFF;
+      font-family: 'Cinzel', serif;
+      font-weight: 900;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--border-ink);
+      box-shadow: var(--shadow-solid-sm);
+    }
+
+    .header-text h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: var(--ink-primary);
+      text-transform: uppercase;
+    }
+
+    .header-text p {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--maroon-deep);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* ROUND INDICATOR */
+    .round-tracker {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .round-badge {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 16px;
+      background-color: var(--gold-light);
+      border: 2px solid var(--border-ink);
+      padding: 4px 14px;
+      box-shadow: var(--shadow-solid-sm);
+      color: var(--ink-primary);
+    }
+
+    .progress-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .accuracy-badge {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--ink-secondary);
+    }
+
+    .accuracy-badge strong {
+      font-family: 'Cinzel', serif;
+      color: var(--maroon-deep);
+      font-size: 13px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--border-ink);
+      background-color: transparent;
+      transition: all 0.25s ease;
+    }
+
+    .dot.correct-dot {
+      background-color: var(--focus-good);
+      border-color: var(--focus-good);
+    }
+
+    .dot.wrong-dot {
+      background-color: var(--maroon-deep);
+    }
+
+    .dot.active {
+      background-color: var(--gold-accent);
+      transform: scale(1.25);
+    }
+
+    /* MAIN STAGE */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    /* STATE: IDLE & ROLLING */
+    .center-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      max-width: 900px;
+    }
+
+    /* ROTATING ORNAMENT SEAL */
+    .seal-container {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .seal-ring-outer {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border: 5px dashed var(--gold-accent);
+      border-radius: 50%;
+      transition: transform 0.1s linear;
+    }
+
+    .seal-ring-inner {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border: 4px solid var(--border-ink);
+      border-radius: 50%;
+      background-color: var(--bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-solid);
+    }
+
+    .seal-core {
+      font-family: 'Cinzel', serif;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--maroon-deep);
+      letter-spacing: 2px;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .seal-core span {
+      display: block;
+      font-size: 11px;
+      color: var(--gold-accent);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      margin-top: 4px;
+      letter-spacing: 2px;
+    }
+
+    /* ANIMATION WHEN PLAYING */
+    .is-spinning .seal-ring-outer {
+      animation: spinClockwise 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      border-color: var(--maroon-deep);
+      border-style: double;
+      border-width: 8px;
+    }
+
+    .is-spinning .seal-ring-inner {
+      animation: pulseVibe 0.6s infinite alternate;
+      border-color: var(--maroon-deep);
+    }
+
+    @keyframes spinClockwise {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseVibe {
+      0% { transform: scale(0.96); }
+      100% { transform: scale(1.04); }
+    }
+
+    /* STATUS BANNER */
+    .status-marquee {
+      background-color: var(--ink-primary);
+      color: #FFF;
+      padding: 12px 32px;
+      font-family: 'Cinzel', serif;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      border: 3px solid var(--gold-border);
+      box-shadow: var(--shadow-solid);
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .status-marquee.active {
+      background-color: var(--maroon-deep);
+      color: #FFF;
+      border-color: var(--ink-primary);
+      animation: bannerBlink 0.8s infinite alternate;
+    }
+
+    @keyframes bannerBlink {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.03); }
+    }
+
+    .status-subtext {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink-secondary);
+      max-width: 650px;
+      line-height: 1.5;
+    }
+
+    /* STATE: QUESTION REVEALED (HIGH VISIBILITY FOR PROJECTOR) */
+    .question-card {
+      display: none;
+      width: 100%;
+      max-width: 1050px;
+      background-color: var(--bg-card);
+      border: 4px solid var(--border-ink);
+      box-shadow: var(--shadow-solid-lg);
+      padding: 36px 48px;
+      position: relative;
+      text-align: left;
+      animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: translateY(20px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .card-top-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--maroon-deep);
+      color: #FFF;
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 6px 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: 2px solid var(--border-ink);
+      margin-bottom: 20px;
+    }
+
+    .target-alert {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--maroon-deep);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .question-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1.35;
+      color: var(--ink-primary);
+      margin-bottom: 24px;
+    }
+
+    /* PILIHAN GANDA */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .answers-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .answer-choice {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      text-align: left;
+      padding: 14px 20px;
+      border: 3px solid var(--border-ink);
+      background-color: var(--bg-card);
+      box-shadow: var(--shadow-solid-sm);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      line-height: 1.4;
+      color: var(--ink-primary);
+      transition: all 0.15s ease;
+    }
+
+    .answer-choice:hover:not(:disabled) {
+      background-color: var(--gold-light);
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0px #12100E;
+    }
+
+    .answer-choice:disabled {
+      cursor: default;
+    }
+
+    .answer-choice .choice-letter {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      border: 2px solid var(--border-ink);
+      background-color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--maroon-deep);
+    }
+
+    .answer-choice.correct {
+      background-color: var(--maroon-light);
+      border-color: var(--maroon-deep);
+    }
+
+    .answer-choice.correct .choice-letter {
+      background-color: var(--maroon-deep);
+      color: #FFF;
+    }
+
+    .answer-choice.wrong {
+      background-color: #F3E4E4;
+      border-color: #701A1E;
+      opacity: 0.75;
+    }
+
+    .answer-choice.wrong .choice-letter {
+      background-color: #701A1E;
+      color: #FFF;
+    }
+
+    .feedback-line {
+      display: none;
+      margin-top: 20px;
+      padding: 16px 20px;
+      border: 3px solid var(--gold-accent);
+      background-color: var(--gold-light);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--ink-primary);
+      animation: fadeIn 0.25s ease;
+    }
+
+    .feedback-line.visible { display: block; }
+
+    .feedback-line strong {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--maroon-deep);
+      margin-bottom: 6px;
+    }
+
+    /* FOOTER CONTROLS */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 18px;
+      border-top: 3px solid var(--border-ink);
+      gap: 16px;
+    }
+
+    .controls-left, .controls-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* BUTTONS - HIGH CONTRAST CLASSIC */
+    button {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      padding: 14px 28px;
+      border: 3px solid var(--border-ink);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.15s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    button:active {
+      transform: translate(3px, 3px);
+      box-shadow: none !important;
+    }
+
+    .btn-primary {
+      background-color: var(--maroon-deep);
+      color: #FFF;
+      box-shadow: var(--shadow-solid);
+      font-size: 18px;
+      padding: 16px 36px;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--maroon-hover);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-card);
+      color: var(--ink-primary);
+      box-shadow: var(--shadow-solid-sm);
+    }
+
+    .btn-secondary:hover {
+      background-color: #ECE7DF;
+    }
+
+    .btn-accent {
+      background-color: var(--gold-accent);
+      color: #FFF;
+      box-shadow: var(--shadow-solid-sm);
+    }
+
+    .btn-accent:hover {
+      background-color: #84682E;
+    }
+
+    .btn-icon-only {
+      padding: 12px 16px;
+    }
+
+    /* SHORTCUT HELPER BADGE */
+    .keyboard-hint {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink-secondary);
+      background-color: #E7E1D8;
+      padding: 6px 12px;
+      border: 1px solid var(--gold-border);
+    }
+
+    .keyboard-hint kbd {
+      background: var(--ink-primary);
+      color: #FFF;
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-family: monospace;
+      font-size: 11px;
+    }
+
+    /* COMPLETED SCREEN */
+    .finished-box {
+      display: none;
+      background: var(--bg-card);
+      border: 4px solid var(--border-ink);
+      padding: 40px;
+      box-shadow: var(--shadow-solid-lg);
+      max-width: 700px;
+    }
+    
+    .finished-box h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 32px;
+      color: var(--maroon-deep);
+      margin-bottom: 12px;
+    }
+
+    /* RINGKASAN AKURASI KELAS */
+    .class-score-summary {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin: 8px 0 24px;
+      padding: 24px;
+      border: 3px solid var(--border-ink);
+      background-color: var(--gold-light);
+      box-shadow: var(--shadow-solid-sm);
+    }
+
+    .score-big {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .score-big strong {
+      font-family: 'Cinzel', serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--maroon-deep);
+      line-height: 1;
+    }
+
+    .score-big span {
+      margin-top: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--ink-secondary);
+    }
+
+    .score-detail-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .score-detail {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink-secondary);
+    }
+
+    .focus-tag {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 8px 16px;
+      border: 2px solid var(--border-ink);
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .focus-tag.good { background-color: var(--focus-good-bg); color: var(--focus-good); border-color: var(--focus-good); }
+    .focus-tag.mid { background-color: var(--focus-mid-bg); color: var(--focus-mid); border-color: var(--focus-mid); }
+    .focus-tag.low { background-color: var(--focus-low-bg); color: var(--focus-low); border-color: var(--focus-low); }
+
+    .review-topics {
+      margin-bottom: 24px;
+      padding: 18px 22px;
+      border: 2px solid var(--gold-border);
+      background-color: var(--bg-parchment);
+    }
+
+    .review-topics-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--maroon-deep);
+      margin-bottom: 10px;
+    }
+
+    .review-topics ul {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .review-topics li {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .review-topics li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--maroon-deep);
+    }
+
+    /* RESPONSIVE FULLSCREEN */
+    @media (max-width: 900px) {
+      .screen-frame { padding: 16px; }
+      .question-text { font-size: 24px; }
+      .question-card { padding: 24px; }
+      .status-marquee { font-size: 18px; padding: 8px 20px; }
+      button { font-size: 14px; padding: 12px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="screen-frame">
+    
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="emblem-badge">VOC</div>
+        <div class="header-text">
+          <h1>Talking Stick Sejarah</h1>
+          <p>Materi: Kolonialisme VOC & Perang Jenar (Bagelen)</p>
+        </div>
+      </div>
+
+      <div class="round-tracker">
+        <div class="round-badge" id="roundBadge">RONDE 1 / 10</div>
+        <div class="progress-dots" id="progressDots"></div>
+        <div class="accuracy-badge" id="accuracyBadge">Akurasi kelas: <strong id="accuracyValue">–</strong></div>
+      </div>
+    </header>
+
+    <!-- MAIN INTERACTIVE STAGE -->
+    <main>
+
+      <!-- IDLE / ROLLING SCREEN -->
+      <div class="center-stage" id="rollingStage">
+        
+        <div class="seal-container" id="sealContainer">
+          <div class="seal-ring-outer"></div>
+          <div class="seal-ring-inner">
+            <div class="seal-core">
+              1602
+              <span>COMPAGNIE</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="status-marquee" id="statusMarquee">SIAP DIMULAI</div>
+        
+        <p class="status-subtext" id="statusInstruction">
+          Tekan tombol <strong>"MULAI EDARKAN TONGKAT"</strong>. Siswa segera mengestafetkan tongkat ke teman sebelahnya secara tertib saat musik berbunyi!
+        </p>
+
+      </div>
+
+      <!-- QUESTION REVEAL SCREEN (STOP STATE) -->
+      <div class="question-card" id="questionCard">
+        <div class="card-top-tag" id="qTopicTag">SEJARAH VOC & PERANG JENAR</div>
+        <div class="target-alert">
+          <span>⚠️</span> PEMEGANG TONGKAT WAJIB MENJAWAB LISAN:
+        </div>
+        <div class="question-text" id="questionText">
+          Pertanyaan sedang dimuat...
+        </div>
+
+        <!-- PILIHAN GANDA -->
+        <div class="answers-grid" id="answersGrid"></div>
+
+        <!-- FEEDBACK SETELAH MENJAWAB -->
+        <div class="feedback-line" id="feedbackLine">
+          <strong id="feedbackTitle"></strong>
+          <span id="feedbackText"></span>
+        </div>
+      </div>
+
+      <!-- GAME OVER SCREEN -->
+      <div class="finished-box" id="finishedBox">
+        <h2>🎉 EVALUASI SELESAI!</h2>
+        <p style="font-size: 18px; margin-bottom: 24px; font-weight: 600;">
+          Semua 10 ronde pertanyaan telah selesai dijawab oleh siswa. Berikan apresiasi kepada seluruh kelas atas partisipasinya!
+        </p>
+
+        <div class="class-score-summary">
+          <div class="score-big">
+            <strong id="finalAccuracyValue">0%</strong>
+            <span>Akurasi Kelas</span>
+          </div>
+          <div class="score-detail-wrap">
+            <div class="score-detail" id="finalScoreDetail">0 benar &middot; 0 kurang tepat dari 10 soal</div>
+            <div class="focus-tag" id="focusTag">–</div>
+          </div>
+        </div>
+
+        <div class="review-topics" id="reviewTopics" style="display: none;">
+          <div class="review-topics-title">Materi yang perlu diulas kembali:</div>
+          <ul id="reviewTopicsList"></ul>
+        </div>
+
+        <button class="btn-primary" onclick="restartGame()">
+          🔄 Ulangi Sesi Dari Awal
+        </button>
+      </div>
+
+    </main>
+
+    <!-- FOOTER CONTROLLER -->
+    <footer>
+      <div class="controls-left">
+        <button id="btnMainAction" class="btn-primary" onclick="togglePlayState()">
+          <span>▶</span> MULAI EDARKAN TONGKAT
+        </button>
+
+        <button id="btnNextRound" class="btn-secondary" onclick="nextRound()" style="display: none;">
+          Lanjut Ronde Berikutnya ➔
+        </button>
+      </div>
+
+      <div class="controls-right">
+        <div class="keyboard-hint">
+          Pintasan: <kbd>Spasi</kbd> Mulai/Lanjut &nbsp;|&nbsp; <kbd>F</kbd> Layar Penuh
+        </div>
+        <button class="btn-secondary btn-icon-only" onclick="toggleFullScreen()" title="Layar Penuh (Fullscreen)">
+          ⛶ FULLSCREEN
+        </button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- MUSIK LATAR: Hari Merdeka (17 Agustus 1945) -->
+  <audio id="bgMusic" src="musik-latar-hari-merdeka.mp3" loop preload="auto" style="display:none"></audio>
+
+  <script>
+    /* ==========================================
+       BANK SOAL SEJARAH VOC & PERANG JENAR (10 SOAL)
+       ========================================== */
+    const QUESTION_BANK = [
+      {
+        topic: "Latar Belakang & Pendirian",
+        q: "Pada tahun berapa VOC (Verenigde Oostindische Compagnie) resmi didirikan di Belanda, dan apa tujuan utama penggabungan kongsi-kongsi dagang tersebut?",
+        choices: [
+          "1602 — mencegah persaingan antarpedagang Belanda dan memonopoli perdagangan rempah di Asia",
+          "1619 — mendirikan pos dagang permanen pertama di Batavia",
+          "1596 — memperingati pelayaran pertama Cornelis de Houtman ke Nusantara",
+          "1799 — menyatukan seluruh kongsi dagang Eropa yang ada di Asia"
+        ],
+        correct: 0,
+        a: "VOC didirikan pada 1602 untuk mencegah persaingan tidak sehat antarpedagang Belanda dan memonopoli perdagangan rempah di Asia."
+      },
+      {
+        topic: "Hak Istimewa (Oktroi)",
+        q: "Manakah yang termasuk hak istimewa (Hak Oktroi) yang diberikan Parlemen Belanda (Staten-Generaal) kepada VOC?",
+        choices: [
+          "Monopoli dagang, memiliki tentara sendiri, serta boleh menyatakan perang atau membuat perjanjian damai",
+          "Hanya boleh berdagang tanpa campur tangan urusan pemerintahan lokal",
+          "Wajib membayar pajak penuh kepada Kesultanan Mataram",
+          "Hanya berlaku untuk jalur perdagangan di wilayah Eropa"
+        ],
+        correct: 0,
+        a: "Hak Oktroi mencakup monopoli perdagangan, memiliki tentara sendiri, menyatakan perang/damai, mencetak mata uang, dan mendirikan benteng."
+      },
+      {
+        topic: "Inovasi Ekonomi Global",
+        q: "Mengapa VOC tercatat dalam sejarah dunia sebagai pelopor perusahaan multinasional modern pertama di dunia?",
+        choices: [
+          "Karena VOC pertama kali menerbitkan saham publik yang bisa diperjualbelikan di bursa efek Amsterdam",
+          "Karena VOC pertama kali menggunakan mesin uap dalam pelayarannya",
+          "Karena VOC pertama kali membentuk serikat pekerja dagang",
+          "Karena VOC pertama kali membuka cabang dagang di benua Amerika"
+        ],
+        correct: 0,
+        a: "VOC adalah perusahaan pertama di dunia yang menerbitkan sistem saham publik (IPO) yang diperjualbelikan di bursa efek Amsterdam."
+      },
+      {
+        topic: "Struktur Organisasi VOC",
+        q: "Siapakah sebutan bagi dewan perwakilan 17 orang direktur penguasa utama kongsi dagang VOC di Belanda?",
+        choices: [
+          "Heeren Zeventien (Tuan-Tuan Tujuh Belas)",
+          "Raad van Indie",
+          "Gubernur Jenderal",
+          "Staten-Generaal"
+        ],
+        correct: 0,
+        a: "Sebutannya adalah Heeren Zeventien atau 'Tuan-Tuan Tujuh Belas'."
+      },
+      {
+        topic: "Kebijakan & Monopoli",
+        q: "Apa yang dimaksud dengan kebijakan Pelayaran Hongi (Hongitochten) yang diterapkan VOC di Kepulauan Maluku?",
+        choices: [
+          "Patroli bersenjata dengan perahu kora-kora untuk menindak petani yang menjual rempah di luar VOC",
+          "Pelayaran dagang resmi VOC menuju pelabuhan-pelabuhan di Eropa",
+          "Ekspedisi pemetaan wilayah baru di sekitar Maluku",
+          "Perjalanan diplomatik VOC ke Kesultanan Ternate"
+        ],
+        correct: 0,
+        a: "Pelayaran Hongi adalah patroli bersenjata memakai kora-kora untuk mengawasi dan menindak petani Maluku yang menjual rempah ke luar VOC."
+      },
+      {
+        topic: "Kebijakan Ekstirpasi",
+        q: "Apa tujuan VOC menerapkan kebijakan 'Hak Ekstirpasi' terhadap tanaman cengkih dan pala di Maluku?",
+        choices: [
+          "Menebang kelebihan tanaman rempah agar harganya tetap tinggi dan stabil di pasar Eropa",
+          "Menanam jenis rempah baru hasil impor dari Eropa",
+          "Membagikan bibit rempah secara gratis kepada petani",
+          "Melarang total penanaman rempah di seluruh Maluku"
+        ],
+        correct: 0,
+        a: "Ekstirpasi adalah penebangan kelebihan tanaman rempah agar produksinya tidak berlimpah, sehingga harga di pasar Eropa tetap tinggi."
+      },
+      {
+        topic: "Sejarah Lokal Bagelen & Jenar",
+        q: "Di manakah letak wilayah Jenar yang menjadi saksi pertempuran rakyat Mataram melawan VOC, dan masuk kabupaten mana saat ini?",
+        choices: [
+          "Tepi Sungai Bogowonto, Bagelen — kini bagian Kabupaten Purworejo",
+          "Tepi Sungai Citarum — kini bagian Kabupaten Bandung",
+          "Pelabuhan Batavia — kini bagian DKI Jakarta",
+          "Dataran tinggi Dieng — kini bagian Kabupaten Wonosobo"
+        ],
+        correct: 0,
+        a: "Jenar terletak di tepi Sungai Bogowonto, wilayah Bagelen, yang kini menjadi bagian dari Kabupaten Purworejo."
+      },
+      {
+        topic: "Perang Suksesi Jawa III",
+        q: "Siapakah pangeran pejuang Mataram yang memimpin perlawanan terhadap VOC di wilayah Jenar (Bagelen) sebelum Perjanjian Giyanti 1755?",
+        choices: [
+          "Pangeran Mangkubumi, yang kelak bertahta sebagai Sultan Hamengkubuwono I",
+          "Pangeran Diponegoro",
+          "Sultan Agung Hanyokrokusumo",
+          "Trunojoyo dari Madura"
+        ],
+        correct: 0,
+        a: "Tokohnya adalah Pangeran Mangkubumi, yang kemudian bertahta sebagai Sultan Hamengkubuwono I."
+      },
+      {
+        topic: "Kemunduran & Pembubaran",
+        q: "Korupsi merajalela di tubuh pejabat VOC hingga diplesetkan menjadi istilah apa, dan tahun berapa VOC resmi dibubarkan?",
+        choices: [
+          "Vergaan Onder Corruptie — dibubarkan 31 Desember 1799",
+          "Bataafsche Republiek — dibubarkan tahun 1811",
+          "Cultuurstelsel — dibubarkan tahun 1830",
+          "Pax Neerlandica — dibubarkan tahun 1904"
+        ],
+        correct: 0,
+        a: "Diplesetkan menjadi 'Vergaan Onder Corruptie' (hancur karena korupsi), dan resmi dibubarkan 31 Desember 1799."
+      },
+      {
+        topic: "Dampak Kolonialisme",
+        q: "Setelah VOC bangkrut dan dibubarkan akhir 1799, kekuasaan dan seluruh utang-piutangnya di Nusantara beralih ke tangan siapa?",
+        choices: [
+          "Pemerintah Kerajaan Belanda (Pemerintah Kolonial Hindia Belanda)",
+          "Kesultanan Mataram Islam",
+          "Inggris melalui East India Company (EIC)",
+          "Pemerintah federal Amerika Serikat"
+        ],
+        correct: 0,
+        a: "Kekuasaan dan utang-piutang VOC beralih langsung ke tangan Pemerintah Kerajaan Belanda (Hindia Belanda)."
+      }
+    ];
+
+    /* ==========================================
+       AUDIO ENGINE
+       Musik latar: lagu "Hari Merdeka" (17 Agustus 1945)
+       + chime sintetis pendek saat tongkat berhenti
+       ========================================== */
+    class BackgroundMusicEngine {
+      constructor(videoEl) {
+        this.video = videoEl;
+        this.ctx = null;
+        this.video.volume = 0.85;
+      }
+
+      ensureChimeContext() {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        if (!this.ctx) this.ctx = new AudioContext();
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+      }
+
+      playGongStop() {
+        this.ensureChimeContext();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+
+        // Deep resonance gong / bell
+        const freqs = [85, 170, 255];
+        freqs.forEach((f, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(f, now);
+
+          gain.gain.setValueAtTime(0.3 / (idx + 1), now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
+
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(400, now);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start(now);
+          osc.stop(now + 2.5);
+        });
+      }
+
+      start() {
+        // Lanjutkan dari posisi terakhir, tidak mengulang dari awal
+        const playPromise = this.video.play();
+        if (playPromise && playPromise.catch) playPromise.catch(() => {});
+      }
+
+      stop() {
+        this.video.pause();
+        this.playGongStop();
+      }
+
+      resetToStart() {
+        this.video.pause();
+        this.video.currentTime = 0;
+      }
+    }
+
+    /* ==========================================
+       GAME CONTROLLER & STATE
+       ========================================== */
+    const audioEngine = new BackgroundMusicEngine(document.getElementById('bgMusic'));
+    
+    let currentRoundIndex = 0;
+    let isPlaying = false;
+    let shuffledQuestions = [];
+    let roundResults = []; // 'correct' | 'wrong' | null per ronde
+    let correctCount = 0;
+    let wrongCount = 0;
+
+    // DOM Elements
+    const rollingStage = document.getElementById('rollingStage');
+    const sealContainer = document.getElementById('sealContainer');
+    const statusMarquee = document.getElementById('statusMarquee');
+    const statusInstruction = document.getElementById('statusInstruction');
+    const questionCard = document.getElementById('questionCard');
+    const qTopicTag = document.getElementById('qTopicTag');
+    const questionText = document.getElementById('questionText');
+    const answersGrid = document.getElementById('answersGrid');
+    const feedbackLine = document.getElementById('feedbackLine');
+    const feedbackTitle = document.getElementById('feedbackTitle');
+    const feedbackText = document.getElementById('feedbackText');
+    const btnMainAction = document.getElementById('btnMainAction');
+    const btnNextRound = document.getElementById('btnNextRound');
+    const roundBadge = document.getElementById('roundBadge');
+    const progressDots = document.getElementById('progressDots');
+    const finishedBox = document.getElementById('finishedBox');
+    const accuracyValue = document.getElementById('accuracyValue');
+
+    // Shuffle Questions
+    function shuffleDeck() {
+      shuffledQuestions = [...QUESTION_BANK].sort(() => Math.random() - 0.5);
+      roundResults = new Array(shuffledQuestions.length).fill(null);
+      correctCount = 0;
+      wrongCount = 0;
+      updateAccuracyDisplay();
+    }
+
+    // Render Progress Dots (hijau = benar, maroon = kurang tepat)
+    function renderDots() {
+      progressDots.innerHTML = '';
+      for (let i = 0; i < shuffledQuestions.length; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        if (roundResults[i] === 'correct') dot.classList.add('correct-dot');
+        else if (roundResults[i] === 'wrong') dot.classList.add('wrong-dot');
+        else if (i === currentRoundIndex) dot.classList.add('active');
+        progressDots.appendChild(dot);
+      }
+      roundBadge.textContent = `RONDE ${currentRoundIndex + 1} / ${shuffledQuestions.length}`;
+    }
+
+    // Indikator akurasi kelas (proxy tingkat perhatian siswa)
+    function updateAccuracyDisplay() {
+      const answered = correctCount + wrongCount;
+      accuracyValue.textContent = answered ? Math.round((correctCount / answered) * 100) + '%' : '–';
+    }
+
+    // Ringkasan akhir sesi: akurasi, label fokus kelas, dan materi yang perlu diulas
+    function showFinalSummary() {
+      const answered = correctCount + wrongCount;
+      const pct = answered ? Math.round((correctCount / answered) * 100) : 0;
+
+      document.getElementById('finalAccuracyValue').textContent = pct + '%';
+      document.getElementById('finalScoreDetail').textContent =
+        `${correctCount} benar · ${wrongCount} kurang tepat dari ${shuffledQuestions.length} soal`;
+
+      const tag = document.getElementById('focusTag');
+      tag.classList.remove('good', 'mid', 'low');
+      if (pct >= 80) {
+        tag.textContent = 'Kelas Sangat Fokus!';
+        tag.classList.add('good');
+      } else if (pct >= 60) {
+        tag.textContent = 'Kelas Cukup Fokus';
+        tag.classList.add('mid');
+      } else {
+        tag.textContent = 'Perlu Penguatan Perhatian';
+        tag.classList.add('low');
+      }
+
+      const missedTopics = shuffledQuestions
+        .filter((q, i) => roundResults[i] === 'wrong')
+        .map(q => q.topic);
+
+      const reviewBox = document.getElementById('reviewTopics');
+      const reviewList = document.getElementById('reviewTopicsList');
+      reviewList.innerHTML = '';
+      if (missedTopics.length) {
+        missedTopics.forEach(topic => {
+          const li = document.createElement('li');
+          li.textContent = topic;
+          reviewList.appendChild(li);
+        });
+        reviewBox.style.display = 'block';
+      } else {
+        reviewBox.style.display = 'none';
+      }
+    }
+
+    // TOGGLE: klik pertama = mulai musik, klik kedua (saat berjalan) = berhenti & tampilkan soal
+    function togglePlayState() {
+      if (!isPlaying) {
+        isPlaying = true;
+        audioEngine.start();
+
+        // UI state: Rolling
+        rollingStage.style.display = 'flex';
+        questionCard.style.display = 'none';
+        sealContainer.classList.add('is-spinning');
+
+        statusMarquee.textContent = 'TONGKAT SEDANG DIEDARKAN!';
+        statusMarquee.classList.add('active');
+        statusInstruction.innerHTML = 'Musik berbunyi! <strong>Estafetkan tongkat secara bergiliran sekarang</strong>. Tekan tombol ini lagi kapan pun untuk menghentikan musik dan memunculkan soal.';
+
+        btnMainAction.innerHTML = '<span>⏹</span> HENTIKAN & MUNCULKAN SOAL';
+        btnNextRound.style.display = 'none';
+      } else {
+        triggerStop();
+      }
+    }
+
+    // STOP & REVEAL QUESTION (PILIHAN GANDA)
+    function triggerStop() {
+      isPlaying = false;
+      audioEngine.stop();
+
+      sealContainer.classList.remove('is-spinning');
+      statusMarquee.classList.remove('active');
+
+      // Tampilkan Soal
+      rollingStage.style.display = 'none';
+      questionCard.style.display = 'block';
+
+      const currentQ = shuffledQuestions[currentRoundIndex];
+      qTopicTag.textContent = `Topik: ${currentQ.topic}`;
+      questionText.textContent = currentQ.q;
+
+      feedbackLine.classList.remove('visible');
+      answersGrid.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D', 'E'];
+      currentQ.choices.forEach((choiceText, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'answer-choice';
+        btn.innerHTML = `<span class="choice-letter">${letters[idx]}</span><span>${choiceText}</span>`;
+        btn.onclick = () => selectAnswer(idx, btn);
+        answersGrid.appendChild(btn);
+      });
+
+      // Controls
+      btnNextRound.style.display = 'none';
+      btnMainAction.style.display = 'none';
+    }
+
+    // PILIH JAWABAN
+    function selectAnswer(idx, clickedBtn) {
+      if (roundResults[currentRoundIndex] !== null) return; // sudah dijawab
+      const currentQ = shuffledQuestions[currentRoundIndex];
+      const isCorrect = idx === currentQ.correct;
+
+      Array.from(answersGrid.children).forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === currentQ.correct) btn.classList.add('correct');
+        else if (btn === clickedBtn) btn.classList.add('wrong');
+      });
+
+      feedbackTitle.textContent = isCorrect ? 'Tepat! Sampaikan alasannya ke kelas.' : 'Belum tepat.';
+      feedbackText.textContent = currentQ.a;
+      feedbackLine.classList.add('visible');
+
+      // Catat hasil untuk indikator akurasi/perhatian kelas
+      roundResults[currentRoundIndex] = isCorrect ? 'correct' : 'wrong';
+      if (isCorrect) correctCount++; else wrongCount++;
+      updateAccuracyDisplay();
+
+      btnNextRound.style.display = 'inline-flex';
+    }
+
+    // NEXT ROUND
+    function nextRound() {
+      currentRoundIndex++;
+
+      if (currentRoundIndex >= shuffledQuestions.length) {
+        // Tamat
+        showFinalSummary();
+        questionCard.style.display = 'none';
+        rollingStage.style.display = 'none';
+        finishedBox.style.display = 'block';
+        btnNextRound.style.display = 'none';
+        btnMainAction.style.display = 'none';
+        roundBadge.textContent = 'SELESAI';
+        return;
+      }
+
+      // Reset ke Standby
+      renderDots();
+      questionCard.style.display = 'none';
+      rollingStage.style.display = 'flex';
+      statusMarquee.textContent = 'SIAP UNTUK RONDE ' + (currentRoundIndex + 1);
+      statusInstruction.innerHTML = 'Posisikan tongkat kembali. Tekan <strong>"MULAI EDARKAN TONGKAT"</strong> atau tekan tombol <kbd>Spasi</kbd> untuk melanjutkan musik.';
+
+      btnMainAction.innerHTML = '<span>▶</span> MULAI EDARKAN TONGKAT';
+      btnMainAction.style.display = 'inline-flex';
+      btnNextRound.style.display = 'none';
+    }
+
+    // RESTART
+    function restartGame() {
+      currentRoundIndex = 0;
+      isPlaying = false;
+      audioEngine.resetToStart();
+      shuffleDeck();
+      renderDots();
+      finishedBox.style.display = 'none';
+      rollingStage.style.display = 'flex';
+      questionCard.style.display = 'none';
+      btnMainAction.innerHTML = '<span>▶</span> MULAI EDARKAN TONGKAT';
+      btnMainAction.style.display = 'inline-flex';
+      statusMarquee.textContent = 'SIAP DIMULAI';
+      statusInstruction.innerHTML = 'Tekan tombol <strong>"MULAI EDARKAN TONGKAT"</strong>. Siswa segera mengestafetkan tongkat ke teman sebelahnya secara tertib saat musik berbunyi! Tekan tombol yang sama lagi kapan pun untuk menghentikan musik dan memunculkan soal.';
+    }
+
+    // FULLSCREEN
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => alert(err.message));
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // KEYBOARD SHORTCUTS
+    document.addEventListener('keydown', (e) => {
+      // Spacebar: Start / Next
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (btnMainAction.style.display !== 'none') {
+          togglePlayState();
+        } else if (btnNextRound.style.display !== 'none') {
+          nextRound();
+        }
+      }
+      // 'F' key: Fullscreen
+      if (e.code === 'KeyF') {
+        toggleFullScreen();
+      }
+    });
+
+    // INIT
+    shuffleDeck();
+    renderDots();
+  </script>
+</body>
+</html>
